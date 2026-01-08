@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Case Battle Demo</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #1b1b1b, #000);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.app {
+    width: 360px;
+    background: #111;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 40px rgba(0,0,0,.8);
+}
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.case {
+    background: linear-gradient(145deg, #ffcc00, #ff8800);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    background: linear-gradient(145deg, #00ffcc, #00aa88);
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+button:active {
+    transform: scale(0.97);
+}
+.roll {
+    margin-top: 20px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item {
+    font-size: 24px;
+    animation: spin 1.2s ease-out forwards;
+}
+@keyframes spin {
+    0% { transform: translateY(-200px); opacity: 0; }
+    60% { opacity: 1; }
+    100% { transform: translateY(0); }
+}
+.legendary { color: gold; }
+.epic { color: violet; }
+.rare { color: deepskyblue; }
+.common { color: #aaa; }
+</style>
+</head>
+<body>
 
+<div class="app">
+    <h1>🎁 Кейс</h1>
+
+    <div class="case">
+        Virus Style Case
+    </div>
+
+    <button onclick="openCase()">Открыть</button>
+
+    <div class="roll" id="roll"></div>
+</div>
+
+<script>
+const items = [
+    {name: "Common Item", chance: 60, class: "common"},
+    {name: "Rare Item", chance: 25, class: "rare"},
+    {name: "Epic Item", chance: 10, class: "epic"},
+    {name: "Legendary Item", chance: 5, class: "legendary"},
+];
+
+function openCase() {
+    const roll = document.getElementById("roll");
+    roll.innerHTML = "";
+
+    let rnd = Math.random() * 100;
+    let sum = 0;
+    let result = items[0];
+
+    for (let item of items) {
+        sum += item.chance;
+        if (rnd <= sum) {
+            result = item;
+            break;
+        }
+    }
+
+    const div = document.createElement("div");
+    div.className = `item ${result.class}`;
+    div.innerText = result.name;
+
+    roll.appendChild(div);
+}
+</script>
+
+</body>
+</html>
